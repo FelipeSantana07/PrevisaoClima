@@ -11,17 +11,72 @@
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Previsão em:</ion-card-subtitle>
-      <ion-card-title  class="ion-text-end">Lençóis Paulista - SP </ion-card-title>
+      <ion-card-title  class="ion-text-start">
+        {{previsao?.results?.city}}
+      <span class="ion-float-end">
+        {{previsao?.results?.temp}}°
+      </span>
+      </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      <ion-item lines="none">
-        <ion-label>
-          Item
-        </ion-label>
-        <ion-icon name="partly-sunny"></ion-icon>
-      </ion-item>
+    <ion-card-content >
+      <ion-item-group>
+        <ion-item lines="none"  color="medium">
+          <ion-label>{{previsao?.results?.description}}
+          </ion-label>
+          <ion-icon [name]="buscarIcone(previsao?.results?.condition_slug)"></ion-icon>
+        </ion-item>
+
+        <ion-item lines="none"  color="medium">
+          <ion-label>Horário: <span class="ion-float-right">{{previsao?.results?.time}}</span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none"  color="medium">
+          <ion-label>Humidade do ar: <span class="ion-float-right">{{previsao?.results?.humidity}}</span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none"  color="medium">
+          <ion-label>Velocidade do vento: <span class="ion-float-right">{{previsao?.results?.wind_speedy}}</span>
+          </ion-label>
+        </ion-item>
+
+        <ion-item  color="medium">
+          <ion-label>Amanhecer do Sol: <span class="ion-float-right">{{previsao?.results?.sunrise}}</span></ion-label>
+        </ion-item>
+
+        <ion-item  color="medium">
+          <ion-label>Pôr do Sol: <span class="ion-float-right">{{previsao?.results?.sunset}}</span></ion-label>
+        </ion-item>
+
+
+      </ion-item-group>
     </ion-card-content>
   </ion-card>
+
+  <ion-item-divider>
+    <ion-label>
+      Próximos dias:
+    </ion-label>
+  </ion-item-divider>
+
+
+
+  <ion-list lines="full">
+
+    <!--<ion-item *ngFor="let proxDia of previsao?.results?.forecast let desc of previsao?.results?.forecast let semanaDia of previsao?.results?.forecast" >
+      <ion-label color="dark">{{proxDia.date}} {{semanaDia.weekday}} <span class="ion-float-right"> {{desc.description}}</span></ion-label>
+    </ion-item>
+
+   <ion-item *ngFor="let minD of previsao?.results?.forecast let maxD of previsao?.results?.forecast" >
+      <ion-label color="dark">{{minD.min}} <span class="ion-float-right"> {{maxD.max}}</span></ion-label>
+    </ion-item> -->
+
+    <ion-item *ngFor="let proxDia of previsao?.results?.forecast let desc of previsao?.results?.forecast let semanaDia of previsao?.results?.forecast let minD of previsao?.results?.forecast let maxD of previsao?.results?.forecast" >
+      <ion-label color="dark"><span class="ion-float-right"> {{desc.description}} </span>  <p color="medium">{{proxDia.date}} {{semanaDia.weekday}}</p> Temperatura <br>min: {{minD.min}}° max: {{maxD.max}}°</ion-label>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>
